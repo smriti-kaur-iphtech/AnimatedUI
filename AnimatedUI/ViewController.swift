@@ -21,12 +21,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var fourthColorView: UIView!
     @IBOutlet weak var fifthColorView: UIView!
     @IBOutlet weak var productImageView: UIImageView!
-    @IBOutlet weak var productDetailImageView: UIImageView!
     @IBOutlet weak var cartButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
+    
     
     let animator = UIViewPropertyAnimator(duration: 1.0, curve: .linear)
     let size = ["6","7","8","9"]
-        
+    private let dashHeight: CGFloat = 2.0
+    private let dashWidth: CGFloat = 50.0
+    private let numberFont = UIFont.systemFont(ofSize: 28)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,23 +40,36 @@ class ViewController: UIViewController {
         sizePickerView.delegate = self
         let screenSize: CGRect = UIScreen.main.bounds
         print(screenSize)
+        
 
     }
     
+    
+    
+  /*  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            var touch: UITouch? = touches.first
+            if touch?.view != detailView {
+                detailView.isHidden = true
+                productImageView.isHidden = false
+            }
+        }*/
+
+    
     @IBAction func detailButtonAction(_ sender: UIButton) {
         detailView.isHidden = false
-        productImageView.isHidden = true
-        productDetailImageView.contentMode = .scaleAspectFit
-        productDetailImageView.image = UIImage(named: "shoes")
-        animate()
+        animate(from: 393, to: 300)
     }
     
     @IBAction func addToCartAction(_ sender: UIButton) {
         detailView.isHidden = true
-        productImageView.isHidden = false
+    }
+    
+    @IBAction func closeButtonAction(_ sender: UIButton) {
+        detailView.isHidden = true
     }
     
     func setupUI(){
+        closeButton.layer.cornerRadius = closeButton.layer.bounds.width / 2
         detailView.isHidden = true
         detailButton.layer.cornerRadius = detailButton.layer.bounds.width / 2
         colorView.layer.cornerRadius = colorView.layer.bounds.width / 2
@@ -81,14 +99,17 @@ class ViewController: UIViewController {
         
         let gestureFive = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToWhite (_:)))
         self.fifthColorView.addGestureRecognizer(gestureFive)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
     
-    func animate(){
+    func animate(from: Any, to: Any){
         UIView.animate(withDuration: 1, animations: {
             let animation = CABasicAnimation()
             animation.keyPath = "position.x"
-            animation.fromValue = 393
-            animation.toValue = 300
+            animation.fromValue = from//393
+            animation.toValue = to//300
             animation.duration = 1
             self.detailView.layer.add(animation, forKey: "basic")
         },completion: { done in
@@ -97,6 +118,7 @@ class ViewController: UIViewController {
                 animate.keyPath = "position.x"
                 animate.values = [0,2,-2,2,0]
                 animate.keyTimes = [0,0.16,0.5,0.83,1]
+                
                 animate.duration = 2
                 animate.isAdditive = true
                 self.detailView.layer.add(animate, forKey: "shake")
@@ -104,61 +126,80 @@ class ViewController: UIViewController {
         })
     }
     
+    
+    func animateBackward(){
+        UIView.animate(withDuration: 1, animations: {
+            let animation = CABasicAnimation()
+            animation.keyPath = "position.x"
+            animation.fromValue = 300
+            animation.toValue = 500
+            animation.duration = 1
+            self.detailView.layer.add(animation, forKey: "basic")
+        })
+        
+    }
+    
     func animateImageSize(x: CGFloat, y: CGFloat){
         UIView.animate(withDuration: 2.0, animations: {() -> Void in
-            self.productDetailImageView?.transform = CGAffineTransform(scaleX: x, y: y)
-        }, completion: {(_ finished: Bool) -> Void in
-            UIView.animate(withDuration: 2.0, animations: {() -> Void in
-            self.productDetailImageView?.transform = CGAffineTransform(scaleX: 1, y: 1)
-            })
-            
+            self.productImageView?.transform = CGAffineTransform(scaleX: x, y: y)
         })
     }
     
     @objc func changeColorToRed(_ sender:UITapGestureRecognizer){
-        UIView.transition(with: productDetailImageView,
+        UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productDetailImageView.image = UIImage(named: "redNikeshoes") },
+                          animations: { self.productImageView.image = UIImage(named: "redNikeshoes") },
                           completion: nil)
     }
     
     @objc func changeColorToBlue(_ sender:UITapGestureRecognizer){
-        //productDetailImageView.image = UIImage(named: "blueNikeShoes")
-        UIView.transition(with: productDetailImageView,
+       
+        UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productDetailImageView.image = UIImage(named: "blueNikeShoes") },
+                          animations: { self.productImageView.image = UIImage(named: "blueNikeShoes") },
                           completion: nil)
     }
     
     @objc func changeColorToOrange(_ sender:UITapGestureRecognizer){
-        //productDetailImageView.image = UIImage(named: "orangeNikeShoes")
-        UIView.transition(with: productDetailImageView,
+        
+        UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productDetailImageView.image = UIImage(named: "orangeNikeShoes") },
+                          animations: { self.productImageView.image = UIImage(named: "orangeNikeShoes") },
                           completion: nil)
     }
     
     @objc func changeColorToBlack(_ sender:UITapGestureRecognizer){
-        //productDetailImageView.image = UIImage(named: "blackNikeShoes")
-        UIView.transition(with: productDetailImageView,
+        
+        UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productDetailImageView.image = UIImage(named: "blackNikeShoes") },
+                          animations: { self.productImageView.image = UIImage(named: "blackNikeShoes") },
                           completion: nil)
     }
     
     @objc func changeColorToWhite(_ sender:UITapGestureRecognizer){
-        //productDetailImageView.image = UIImage(named: "shoes")
-        UIView.transition(with: productDetailImageView,
+       
+        UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productDetailImageView.image = UIImage(named: "shoes") },
+                          animations: { self.productImageView.image = UIImage(named: "shoes") },
                           completion: nil)
     }
+    
+    @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        // Check if the tap was outside of the detailView
+        let location = gestureRecognizer.location(in: detailView)
+        if !detailView.point(inside: location, with: nil) {
+            detailView.isHidden = true
+    
+        }
+    }
+        
 }
+
 //MARK: UIPickerView
 extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -169,9 +210,33 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         return size.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        return size[row]
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 30))
+        
+        let dashView = UIView(frame: CGRect(x: 0, y: (containerView.frame.height - dashHeight) / 2, width: dashWidth, height: dashHeight))
+        dashView.backgroundColor = UIColor.white
+        containerView.addSubview(dashView)
+        
+        let height =  (containerView.frame.height - dashHeight) / 2
+        if row != (size.count - 1) {
+            for i in 1...5 {
+                
+                let dashView = UIView(frame: CGRect(x: 0, y: (CGFloat(10 * i) + height), width: dashWidth - 20, height: dashHeight))
+                dashView.backgroundColor = UIColor.white
+                containerView.addSubview(dashView)
+            }
+        }
+        
+        let numberLabel = UILabel(frame: CGRect(x: dashWidth + 20, y: 0, width: 80, height: containerView.frame.height))
+        numberLabel.textAlignment = .center
+        numberLabel.textColor = .white
+        numberLabel.font = numberFont
+        numberLabel.text = "\(size[row])"
+        containerView.addSubview(numberLabel)
+        
+        return containerView
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -182,11 +247,11 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         case "6":
             animateImageSize(x: 1.1, y: 1.1)
         case "7":
-            animateImageSize(x: 1.2, y: 1.2)
+            animateImageSize(x: 1.15, y: 1.15)
         case "8":
-            animateImageSize(x: 1.3, y: 1.3)
+            animateImageSize(x: 1.2, y: 1.2)
         case "9":
-            animateImageSize(x: 1.4, y: 1.4)
+            animateImageSize(x: 1.25, y: 1.25)
         default:
             print("invalid")
         }
