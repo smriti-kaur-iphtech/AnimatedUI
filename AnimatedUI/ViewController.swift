@@ -23,13 +23,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var cartButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var imageBackgroundView: UIView!
+    @IBOutlet weak var layerImageView: UIImageView!
+    @IBOutlet weak var circularImageView: UIImageView!
     
     
     let animator = UIViewPropertyAnimator(duration: 1.0, curve: .linear)
     let size = ["6","7","8","9"]
-    private let dashHeight: CGFloat = 2.0
-    private let dashWidth: CGFloat = 50.0
-    private let numberFont = UIFont.systemFont(ofSize: 28)
+    private let dashHeight: CGFloat = 2.0//2.0
+    private let dashWidth: CGFloat = 80.0//50.0
+    private let numberFont = UIFont.systemFont(ofSize: 40)
     
     
     override func viewDidLoad() {
@@ -44,20 +47,11 @@ class ViewController: UIViewController {
 
     }
     
-    
-    
-  /*  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            var touch: UITouch? = touches.first
-            if touch?.view != detailView {
-                detailView.isHidden = true
-                productImageView.isHidden = false
-            }
-        }*/
-
-    
     @IBAction func detailButtonAction(_ sender: UIButton) {
         detailView.isHidden = false
         animate(from: 393, to: 300)
+        
+        
     }
     
     @IBAction func addToCartAction(_ sender: UIButton) {
@@ -69,15 +63,40 @@ class ViewController: UIViewController {
     }
     
     func setupUI(){
+        //button UI design
         closeButton.layer.cornerRadius = closeButton.layer.bounds.width / 2
         detailView.isHidden = true
         detailButton.layer.cornerRadius = detailButton.layer.bounds.width / 2
+        
+        //for making colorviews circular
         colorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         secondColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         thirdColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         fourthColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         fifthColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         
+        
+        circularImageView.layer.cornerRadius = circularImageView.layer.bounds.width / 2
+        
+        
+        
+        //white border around color views
+        colorView.layer.borderWidth = 2;
+        colorView.layer.borderColor = UIColor.white.cgColor;
+        
+        secondColorView.layer.borderWidth = 2;
+        secondColorView.layer.borderColor = UIColor.white.cgColor;
+        
+        thirdColorView.layer.borderWidth = 2;
+        thirdColorView.layer.borderColor = UIColor.white.cgColor;
+        
+        fourthColorView.layer.borderWidth = 2;
+        fourthColorView.layer.borderColor = UIColor.white.cgColor;
+        
+        fifthColorView.layer.borderWidth = 2;
+        fifthColorView.layer.borderColor = UIColor.white.cgColor;
+        
+        //for making the corners of cartButton round and adding shadow
         cartButton.layer.shadowColor = UIColor.black.cgColor
         cartButton.layer.shadowOpacity = 0.4
         cartButton.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -85,13 +104,21 @@ class ViewController: UIViewController {
         cartButton.layer.masksToBounds = false
         cartButton.layer.cornerRadius = 15.0 //Ht/2
         
+        closeButton.layer.shadowColor = UIColor.black.cgColor
+        closeButton.layer.shadowOpacity = 0.2
+        closeButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+        closeButton.layer.shadowRadius = 4.0
+        closeButton.layer.masksToBounds = false
+        
+        
+        //for recognizing the user tap on colorviews
         let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToRed (_:)))
         self.colorView.addGestureRecognizer(gesture)
         
         let gestureTwo = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToBlue (_:)))
         self.secondColorView.addGestureRecognizer(gestureTwo)
         
-        let gestureThree = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToOrange (_:)))
+        let gestureThree = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToGreen(_:)))
         self.thirdColorView.addGestureRecognizer(gestureThree)
         
         let gestureFour = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToBlack (_:)))
@@ -105,87 +132,143 @@ class ViewController: UIViewController {
     }
     
     func animate(from: Any, to: Any){
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             let animation = CABasicAnimation()
             animation.keyPath = "position.x"
             animation.fromValue = from//393
             animation.toValue = to//300
             animation.duration = 1
             self.detailView.layer.add(animation, forKey: "basic")
+            //self.detailButton.layer.add(animation, forKey: "basic")
         },completion: { done in
             if done{
                 let animate = CAKeyframeAnimation()
                 animate.keyPath = "position.x"
                 animate.values = [0,2,-2,2,0]
                 animate.keyTimes = [0,0.16,0.5,0.83,1]
-                
                 animate.duration = 2
                 animate.isAdditive = true
                 self.detailView.layer.add(animate, forKey: "shake")
+                //self.detailButton.layer.add(animate, forKey: "shake")
+                
             }
         })
     }
     
-    
-    func animateBackward(){
-        UIView.animate(withDuration: 1, animations: {
+    func animateButton(){
+        UIView.animate(withDuration: 0.2, animations: {
             let animation = CABasicAnimation()
             animation.keyPath = "position.x"
-            animation.fromValue = 300
-            animation.toValue = 500
+            animation.fromValue = 393
+            animation.toValue = 300
             animation.duration = 1
-            self.detailView.layer.add(animation, forKey: "basic")
+            self.detailButton.layer.add(animation, forKey: "basic")
+            
         })
-        
     }
     
-    func animateImageSize(x: CGFloat, y: CGFloat){
+                       
+
+    func animateImageSize(x: CGFloat, y: CGFloat, image: UIImageView){
         UIView.animate(withDuration: 2.0, animations: {() -> Void in
-            self.productImageView?.transform = CGAffineTransform(scaleX: x, y: y)
+            image.transform = CGAffineTransform(scaleX: x, y: y)
         })
     }
     
+    //MARK: Functions for changing the color of specific part of image.
     @objc func changeColorToRed(_ sender:UITapGestureRecognizer){
-        UIView.transition(with: productImageView,
+        UIView.transition(with: layerImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productImageView.image = UIImage(named: "redNikeshoes") },
+                          animations: {
+            let originalImage = self.layerImageView?.image
+       let tintedImage = originalImage?.withRenderingMode(.alwaysTemplate)
+            self.layerImageView.image = tintedImage
+           // self.layerImageView.tintColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+            let myImage2 = UIImage(named: "layer")
+            self.layerImageView.image = myImage2!.maskWithGradientColor(color: UIColor.red, value1:1 , value2: 0, value3: 0, value4: 1, value5: 1, value6: 1, alphaValueTop: 0, alphaValueBottom: 1)
+        },
                           completion: nil)
+        
     }
     
     @objc func changeColorToBlue(_ sender:UITapGestureRecognizer){
        
-        UIView.transition(with: productImageView,
+       /* UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
                           animations: { self.productImageView.image = UIImage(named: "blueNikeShoes") },
+                          completion: nil)*/
+        
+        UIView.transition(with: layerImageView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {
+            //let originalImage = self.layerImageView?.image
+            //let tintedImage = originalImage?.withRenderingMode(.alwaysTemplate)
+            //self.layerImageView.image = tintedImage
+            let myImage2 = UIImage(named: "layer")
+            self.layerImageView.image = myImage2!.maskWithGradientColor(color: UIColor.blue, value1: 0, value2: 0, value3: 1, value4: 0, value5: 0, value6: 1, alphaValueTop: 1, alphaValueBottom: 0)},
                           completion: nil)
     }
     
-    @objc func changeColorToOrange(_ sender:UITapGestureRecognizer){
+    @objc func changeColorToGreen(_ sender:UITapGestureRecognizer){
         
-        UIView.transition(with: productImageView,
+        /*UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
                           animations: { self.productImageView.image = UIImage(named: "orangeNikeShoes") },
+                          completion: nil)*/
+        UIView.transition(with: layerImageView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {
+            let originalImage = self.layerImageView?.image
+       let tintedImage = originalImage?.withRenderingMode(.alwaysTemplate)
+            self.layerImageView.image = tintedImage
+       //self.layerImageView.tintColor = UIColor(red: 225, green: 165, blue: 0, alpha: 0.5)
+            let myImage2 = UIImage(named: "layer")
+            self.layerImageView.image = myImage2!.maskWithGradientColor(color: UIColor.orange, value1: 0, value2: 1, value3: 0, value4: 1, value5: 0, value6: 0, alphaValueTop: 0, alphaValueBottom: 1)
+        },
                           completion: nil)
     }
     
     @objc func changeColorToBlack(_ sender:UITapGestureRecognizer){
         
-        UIView.transition(with: productImageView,
+        /*UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productImageView.image = UIImage(named: "blackNikeShoes") },
+                          animations: { self.productImageView.image = UIImage(named: "blackNike") },
+                          completion: nil)*/
+        UIView.transition(with: layerImageView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {
+            let originalImage = self.layerImageView?.image
+       let tintedImage = originalImage?.withRenderingMode(.alwaysTemplate)
+            self.layerImageView.image = tintedImage
+            //self.layerImageView.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+            let myImage2 = UIImage(named: "layer")
+            self.layerImageView.image = myImage2!.maskWithGradientColor(color: UIColor.black, value1: 0, value2: 0, value3: 0, value4: 0, value5: 0, value6: 0, alphaValueTop: 0, alphaValueBottom: 1)
+        },
                           completion: nil)
     }
     
     @objc func changeColorToWhite(_ sender:UITapGestureRecognizer){
        
-        UIView.transition(with: productImageView,
+       /* UIView.transition(with: productImageView,
                           duration: 1.0,
                           options: .transitionCrossDissolve,
-                          animations: { self.productImageView.image = UIImage(named: "shoes") },
+                          animations: { self.productImageView.image = UIImage(named: "whiteNike") },
+                          completion: nil)*/
+        UIView.transition(with: layerImageView,
+                          duration: 1.0,
+                          options: .transitionCrossDissolve,
+                          animations: {
+            let originalImage = self.layerImageView?.image
+       let tintedImage = originalImage?.withRenderingMode(.alwaysTemplate)
+            self.layerImageView.image = tintedImage
+       self.layerImageView.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5) },
                           completion: nil)
     }
     
@@ -210,9 +293,14 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         return size.count
     }
     
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 50
+    }
+    
+
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 30))
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 30)) //120 //30
         
         let dashView = UIView(frame: CGRect(x: 0, y: (containerView.frame.height - dashHeight) / 2, width: dashWidth, height: dashHeight))
         dashView.backgroundColor = UIColor.white
@@ -228,10 +316,11 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
             }
         }
         
-        let numberLabel = UILabel(frame: CGRect(x: dashWidth + 20, y: 0, width: 80, height: containerView.frame.height))
+        let numberLabel = UILabel(frame: CGRect(x: dashWidth + 10, y: 0, width: 70, height: containerView.frame.height)) //x: dashWidth + 10//80
         numberLabel.textAlignment = .center
         numberLabel.textColor = .white
-        numberLabel.font = numberFont
+       //numberLabel.font = numberFont
+        numberLabel.font = UIFont.boldSystemFont(ofSize: 40)
         numberLabel.text = "\(size[row])"
         containerView.addSubview(numberLabel)
         
@@ -245,15 +334,61 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         switch sizeSelected{
             
         case "6":
-            animateImageSize(x: 1.1, y: 1.1)
+            animateImageSize(x: 1.1, y: 1.1, image: layerImageView)
+            animateImageSize(x: 1.1, y: 1.1, image: productImageView)
         case "7":
-            animateImageSize(x: 1.15, y: 1.15)
+            animateImageSize(x: 1.13, y: 1.13, image: layerImageView)
+            animateImageSize(x: 1.13, y: 1.13, image: productImageView)
         case "8":
-            animateImageSize(x: 1.2, y: 1.2)
+            animateImageSize(x: 1.16, y: 1.16, image: layerImageView)
+            animateImageSize(x: 1.16, y: 1.16, image: productImageView)
         case "9":
-            animateImageSize(x: 1.25, y: 1.25)
+            animateImageSize(x: 1.19, y: 1.19, image: layerImageView)
+            animateImageSize(x: 1.19, y: 1.19, image: productImageView)
         default:
             print("invalid")
+        }
+    }
+}
+
+
+//MARK: gradient
+extension UIImage {
+    func maskWithGradientColor(color: UIColor, value1: CGFloat, value2: CGFloat, value3: CGFloat, value4: CGFloat, value5: CGFloat, value6: CGFloat, alphaValueTop: CGFloat, alphaValueBottom: CGFloat) -> UIImage? {
+        
+        let maskImage = self.cgImage
+        let width = self.size.width
+        let height = self.size.height
+        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let bitmapContext = CGContext(data: nil,
+                                      width: Int(width),
+                                      height: Int(height),
+                                      bitsPerComponent: 8,
+                                      bytesPerRow: 0,
+                                      space: colorSpace,
+                                      bitmapInfo: bitmapInfo.rawValue)
+        
+        let locations:[CGFloat] = [0.0, 1.0]
+        let bottom = UIColor(red: value1, green: value2, blue: value3, alpha: 1).cgColor
+        let top = UIColor(red: value4, green: value5, blue: value6, alpha: 0).cgColor
+        //let colors = [top, bottom] as CFArray
+        let colors = [bottom, top] as CFArray
+        let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: locations)
+        let startPoint = CGPoint(x: width/2, y: 0)
+        let endPoint = CGPoint(x: width/2, y: height)
+        
+        bitmapContext!.clip(to: bounds, mask: maskImage!)
+        bitmapContext!.drawLinearGradient(gradient!, start: startPoint, end: endPoint, options: CGGradientDrawingOptions(rawValue: UInt32(0)))
+        
+        if let cImage = bitmapContext!.makeImage() {
+            let coloredImage = UIImage(cgImage: cImage)
+            return coloredImage
+        }
+        else  {
+            return nil
         }
     }
 }
