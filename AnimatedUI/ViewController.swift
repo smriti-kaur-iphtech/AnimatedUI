@@ -30,9 +30,11 @@ class ViewController: UIViewController {
     
     let animator = UIViewPropertyAnimator(duration: 1.0, curve: .linear)
     let size = ["6","7","8","9"]
-    private let dashHeight: CGFloat = 2.0//2.0
-    private let dashWidth: CGFloat = 80.0//50.0
-    private let numberFont = UIFont.systemFont(ofSize: 40)
+    private let dashHeight: CGFloat = 1.0//2.0
+    private let dashWidth: CGFloat = 99.0//95.0//80.0//50.0
+   // private let numberFont = UIFont.systemFont(ofSize: 40)
+    private let numberFont = UIFont.boldSystemFont(ofSize: 38)
+    
     
     
     override func viewDidLoad() {
@@ -43,18 +45,22 @@ class ViewController: UIViewController {
         sizePickerView.delegate = self
         let screenSize: CGRect = UIScreen.main.bounds
         print(screenSize)
+        print(detailView.bounds.width)
+        print(detailView.bounds.height)
         
 
     }
     
     @IBAction func detailButtonAction(_ sender: UIButton) {
         detailView.isHidden = false
-        animate(from: 393, to: 300)
+        //animate(from: 393, to: 300)
+        circleAnim(detailView, duration: 1.0)
         
         
     }
     
     @IBAction func addToCartAction(_ sender: UIButton) {
+       
         detailView.isHidden = true
     }
     
@@ -81,36 +87,36 @@ class ViewController: UIViewController {
         
         
         //white border around color views
-        colorView.layer.borderWidth = 2;
-        colorView.layer.borderColor = UIColor.white.cgColor;
+        colorView.layer.borderWidth = 2
+        colorView.layer.borderColor = UIColor.white.cgColor
         
-        secondColorView.layer.borderWidth = 2;
-        secondColorView.layer.borderColor = UIColor.white.cgColor;
+        secondColorView.layer.borderWidth = 2
+        secondColorView.layer.borderColor = UIColor.white.cgColor
         
-        thirdColorView.layer.borderWidth = 2;
-        thirdColorView.layer.borderColor = UIColor.white.cgColor;
+        thirdColorView.layer.borderWidth = 2
+        thirdColorView.layer.borderColor = UIColor.white.cgColor
         
-        fourthColorView.layer.borderWidth = 2;
-        fourthColorView.layer.borderColor = UIColor.white.cgColor;
+        fourthColorView.layer.borderWidth = 2
+        fourthColorView.layer.borderColor = UIColor.white.cgColor
         
-        fifthColorView.layer.borderWidth = 2;
-        fifthColorView.layer.borderColor = UIColor.white.cgColor;
+        fifthColorView.layer.borderWidth = 2
+        fifthColorView.layer.borderColor = UIColor.white.cgColor
         
-        //for making the corners of cartButton round and adding shadow
-        cartButton.layer.shadowColor = UIColor.black.cgColor
-        cartButton.layer.shadowOpacity = 0.4
-        cartButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cartButton.layer.shadowRadius = 5.0
         cartButton.layer.masksToBounds = false
-        cartButton.layer.cornerRadius = 15.0 //Ht/2
+        cartButton.layer.cornerRadius = 20.0 //Ht/2
+        cartButton.layer.borderWidth = 2
+        cartButton.layer.borderColor = UIColor.white.cgColor
+        cartButton.titleLabel?.font = .systemFont(ofSize: 15)
+        self.cartButton.frame.size.height = 100
         
         closeButton.layer.shadowColor = UIColor.black.cgColor
         closeButton.layer.shadowOpacity = 0.2
         closeButton.layer.shadowOffset = CGSize(width: 2, height: 2)
         closeButton.layer.shadowRadius = 4.0
         closeButton.layer.masksToBounds = false
-        
-        
+  
+        cartButton.addTarget(self, action: #selector(heldDown), for: .touchDown)
+    
         //for recognizing the user tap on colorviews
         let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToRed (_:)))
         self.colorView.addGestureRecognizer(gesture)
@@ -170,10 +176,11 @@ class ViewController: UIViewController {
                        
 
     func animateImageSize(x: CGFloat, y: CGFloat, image: UIImageView){
-        UIView.animate(withDuration: 2.0, animations: {() -> Void in
+        UIView.animate(withDuration: 1.0, animations: {() -> Void in
             image.transform = CGAffineTransform(scaleX: x, y: y)
         })
     }
+    
     
     //MARK: Functions for changing the color of specific part of image.
     @objc func changeColorToRed(_ sender:UITapGestureRecognizer){
@@ -280,7 +287,49 @@ class ViewController: UIViewController {
     
         }
     }
+    
+    //target functions
+    @objc func heldDown()
+    {
+        cartButton.backgroundColor = UIColor(red: 107, green: 132, blue: 241, alpha: 0)
+        cartButton.tintColor = .white
+    }
+    //added
+    func circleAnim(_ view: UIView, duration: CFTimeInterval) {
+        let maskDiameter = CGFloat(sqrtf(powf(Float(view.bounds.width), 2) + powf(Float(view.bounds.height), 2)))
+        print(maskDiameter) //893
+        let mask = CAShapeLayer()
+        let animationId = "path"
+
+        // Make a circular shape.
+        mask.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: maskDiameter, height: maskDiameter), cornerRadius: maskDiameter / 2).cgPath
+
+        mask.position = CGPoint(x: (view.bounds.width - maskDiameter) / 2, y: (view.bounds.height - maskDiameter) / 2)
+        //MARK: 2ND OPTION
+        //mask.position = CGPoint(x: -300, y: -25)
         
+        //CGPoint(x: (view.bounds.width)/maskDiameter-170, y: (view.bounds.height)/maskDiameter+80)
+        // Add as a mask to the parent layer.
+        view.layer.mask = mask
+        
+
+        // Animate.
+        let animation = CABasicAnimation(keyPath: animationId)
+        animation.duration = duration
+        animation.fillMode = .forwards
+        animation.isRemovedOnCompletion = true
+
+        // Create a new path.
+        let newPath = UIBezierPath(roundedRect: CGRect(x: maskDiameter / 2, y: maskDiameter / 2, width: 0, height: 0), cornerRadius: 0).cgPath
+
+        // Set start and end values.
+        animation.fromValue = newPath //mask.path
+        animation.toValue = mask.path //newPath
+
+
+        // Start the animation.
+        mask.add(animation, forKey: animationId)
+    }
 }
 
 //MARK: UIPickerView
@@ -294,13 +343,13 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 50
+        return 40
     }
     
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 30)) //120 //30
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 210, height: 30)) //200//120 //30
         
         let dashView = UIView(frame: CGRect(x: 0, y: (containerView.frame.height - dashHeight) / 2, width: dashWidth, height: dashHeight))
         dashView.backgroundColor = UIColor.white
@@ -309,7 +358,6 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         let height =  (containerView.frame.height - dashHeight) / 2
         if row != (size.count - 1) {
             for i in 1...5 {
-                
                 let dashView = UIView(frame: CGRect(x: 0, y: (CGFloat(10 * i) + height), width: dashWidth - 20, height: dashHeight))
                 dashView.backgroundColor = UIColor.white
                 containerView.addSubview(dashView)
@@ -319,9 +367,14 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         let numberLabel = UILabel(frame: CGRect(x: dashWidth + 10, y: 0, width: 70, height: containerView.frame.height)) //x: dashWidth + 10//80
         numberLabel.textAlignment = .center
         numberLabel.textColor = .white
-       //numberLabel.font = numberFont
-        numberLabel.font = UIFont.boldSystemFont(ofSize: 40)
+        numberLabel.font = numberFont
+        //numberLabel.font = UIFont.boldSystemFont(ofSize: 40)
         numberLabel.text = "\(size[row])"
+        
+        //added
+        if(sizePickerView.selectedRow(inComponent: 0) == row){
+            numberLabel.font = UIFont.systemFont(ofSize: 40)
+                    }
         containerView.addSubview(numberLabel)
         
         return containerView
@@ -336,6 +389,7 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         case "6":
             animateImageSize(x: 1.1, y: 1.1, image: layerImageView)
             animateImageSize(x: 1.1, y: 1.1, image: productImageView)
+           
         case "7":
             animateImageSize(x: 1.13, y: 1.13, image: layerImageView)
             animateImageSize(x: 1.13, y: 1.13, image: productImageView)
@@ -350,7 +404,6 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         }
     }
 }
-
 
 //MARK: gradient
 extension UIImage {
