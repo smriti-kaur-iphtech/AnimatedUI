@@ -25,7 +25,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var imageBackgroundView: UIView!
     @IBOutlet weak var layerImageView: UIImageView!
-    @IBOutlet weak var circularImageView: UIImageView!
+    @IBOutlet weak var outerCircularView: UIView!
+    @IBOutlet weak var middleCircularView: UIView!
+    @IBOutlet weak var innerCircularView: UIView!
     
     
     let animator = UIViewPropertyAnimator(duration: 1.0, curve: .linear)
@@ -40,14 +42,10 @@ class ViewController: UIViewController {
         sizePickerView.dataSource = self
         sizePickerView.delegate = self
         let screenSize: CGRect = UIScreen.main.bounds
-        print(screenSize)
-        print(detailView.bounds.width)
-        print(detailView.bounds.height)
     }
     
     @IBAction func detailButtonAction(_ sender: UIButton) {
         detailView.isHidden = false
-        //animate(from: 393, to: 300)
         Animation.shared.circleAnim(detailView, duration: 0.5)
     }
     
@@ -72,8 +70,6 @@ class ViewController: UIViewController {
         fourthColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
         fifthColorView.layer.cornerRadius = colorView.layer.bounds.width / 2
  
-        circularImageView.layer.cornerRadius = circularImageView.layer.bounds.width / 2
-   
         //white border around color views
         colorView.layer.borderWidth = 2
         colorView.layer.borderColor = UIColor.white.cgColor
@@ -91,7 +87,7 @@ class ViewController: UIViewController {
         fifthColorView.layer.borderColor = UIColor.white.cgColor
         
         cartButton.layer.masksToBounds = false
-        cartButton.layer.cornerRadius = 20.0 //Ht/2
+        cartButton.layer.cornerRadius = cartButton.frame.size.height/2 //Ht/2
         cartButton.layer.borderWidth = 2
         cartButton.layer.borderColor = UIColor.white.cgColor
         cartButton.titleLabel?.font = .systemFont(ofSize: 15)
@@ -104,6 +100,10 @@ class ViewController: UIViewController {
         closeButton.layer.masksToBounds = false
   
         cartButton.addTarget(self, action: #selector(self.heldDown), for: .touchDown)
+        
+        outerCircularView.layer.cornerRadius = outerCircularView.layer.bounds.width / 2
+        middleCircularView.layer.cornerRadius = middleCircularView.layer.bounds.width / 2
+        innerCircularView.layer.cornerRadius = innerCircularView.layer.bounds.width / 2
     
         //for recognizing the user tap on colorviews
         let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.changeColorToRed (_:)))

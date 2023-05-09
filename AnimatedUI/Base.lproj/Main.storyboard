@@ -192,10 +192,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="concentricButton" translatesAutoresizingMaskIntoConstraints="NO" id="gEq-ct-t7v">
-                                        <rect key="frame" x="-25" y="372" width="60" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L07-1f-YN3">
                                         <rect key="frame" x="193" y="565.66666666666663" width="23" height="23"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -203,6 +199,25 @@
                                             <constraint firstAttribute="width" constant="23" id="55O-fw-54U"/>
                                             <constraint firstAttribute="height" constant="23" id="PuP-yx-Vdx"/>
                                         </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKb-SK-sCs">
+                                        <rect key="frame" x="-26" y="373" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1wX-01-vyf">
+                                                <rect key="frame" x="5" y="5" width="40" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ocG-e4-PCP">
+                                                        <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" red="0.41960784313725491" green="0.51764705882352935" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.41960784313725491" green="0.51764705882352935" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.41960784313725491" green="0.51764705882352935" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
@@ -275,7 +290,6 @@
                         <outlet property="addToCartButton" destination="O4O-ZF-GYq" id="N68-IR-e5M"/>
                         <outlet property="brandNameLabel" destination="6kA-AZ-2Eb" id="wgi-v4-H0e"/>
                         <outlet property="cartButton" destination="O4O-ZF-GYq" id="Ti4-Lo-KmN"/>
-                        <outlet property="circularImageView" destination="gEq-ct-t7v" id="Bsh-eG-LnD"/>
                         <outlet property="closeButton" destination="XcV-ed-fva" id="cqk-Vi-6QT"/>
                         <outlet property="colorView" destination="iz7-tp-oYN" id="C1m-BJ-Dhg"/>
                         <outlet property="detailButton" destination="L9h-tR-Vh2" id="1ns-tn-X0j"/>
@@ -283,7 +297,10 @@
                         <outlet property="fifthColorView" destination="L07-1f-YN3" id="xl7-W4-mjM"/>
                         <outlet property="fourthColorView" destination="fcI-nv-xma" id="rDT-cP-ZRy"/>
                         <outlet property="imageBackgroundView" destination="2MU-Ld-fBZ" id="ylm-In-dOQ"/>
+                        <outlet property="innerCircularView" destination="ocG-e4-PCP" id="Uzc-WA-raq"/>
                         <outlet property="layerImageView" destination="Izs-Sg-qHI" id="dba-M2-Rw0"/>
+                        <outlet property="middleCircularView" destination="1wX-01-vyf" id="Mhr-pG-6LL"/>
+                        <outlet property="outerCircularView" destination="bKb-SK-sCs" id="ccN-vM-HRL"/>
                         <outlet property="productImageView" destination="Pdg-Jv-9NQ" id="8go-Dk-NXS"/>
                         <outlet property="secondColorView" destination="NKE-RE-3ax" id="zVc-P3-4Vc"/>
                         <outlet property="shoeNameLabel" destination="V8v-9M-2v7" id="rPP-LU-E9j"/>
@@ -298,7 +315,6 @@
     </scenes>
     <resources>
         <image name="close" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="concentricButton" width="10.666666984558105" height="10.666666984558105"/>
         <image name="hollowButton" width="33.333332061767578" height="33.333332061767578"/>
         <image name="layer" width="340" height="227"/>
         <image name="shoes-removebg-preview" width="275" height="183"/>
