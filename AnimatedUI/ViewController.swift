@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var outerCircularView: UIView!
     @IBOutlet weak var middleCircularView: UIView!
     @IBOutlet weak var innerCircularView: UIView!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     
     let animator = UIViewPropertyAnimator(duration: 1.0, curve: .linear)
@@ -42,6 +43,8 @@ class ViewController: UIViewController {
         sizePickerView.dataSource = self
         sizePickerView.delegate = self
         let screenSize: CGRect = UIScreen.main.bounds
+        descriptionLabel.minimumScaleFactor = 0.5;
+        descriptionLabel.adjustsFontSizeToFitWidth = true;
     }
     
     @IBAction func detailButtonAction(_ sender: UIButton) {
@@ -209,18 +212,18 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         switch sizeSelected{
             
         case "6":
-            Animation.shared.animateImageSize(x: 1.1, y: 1.1, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.1, y: 1.1, image: productImageView)
+            Animation.shared.animateImageSize(x: 1.05, y: 1.05, image: layerImageView)
+            Animation.shared.animateImageSize(x: 1.05, y: 1.05, image: productImageView)
            
         case "7":
-            Animation.shared.animateImageSize(x: 1.13, y: 1.13, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.13, y: 1.13, image: productImageView)
+            Animation.shared.animateImageSize(x: 1.08, y: 1.08, image: layerImageView)
+            Animation.shared.animateImageSize(x: 1.08, y: 1.08, image: productImageView)
         case "8":
-            Animation.shared.animateImageSize(x: 1.16, y: 1.16, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.16, y: 1.16, image: productImageView)
+            Animation.shared.animateImageSize(x: 1.11, y: 1.11, image: layerImageView)
+            Animation.shared.animateImageSize(x: 1.11, y: 1.11, image: productImageView)
         case "9":
-            Animation.shared.animateImageSize(x: 1.19, y: 1.19, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.19, y: 1.19, image: productImageView)
+            Animation.shared.animateImageSize(x: 1.14, y: 1.14, image: layerImageView)
+            Animation.shared.animateImageSize(x: 1.14, y: 1.14, image: productImageView)
         default:
             print("invalid")
         }
