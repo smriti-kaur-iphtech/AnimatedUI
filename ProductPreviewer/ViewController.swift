@@ -42,6 +42,9 @@ class ViewController: UIViewController {
         //let screenSize: CGRect = UIScreen.main.bounds
         //for setting font size according to the screen size
         descriptionLabel.font = descriptionLabel.font.withSize(self.view.frame.height*relativeConstant)
+        let screenSize: CGRect = UIScreen.main.bounds
+        descriptionLabel.minimumScaleFactor = 0.5;
+        descriptionLabel.adjustsFontSizeToFitWidth = true;
     }
     
     @IBAction func detailButtonAction(_ sender: UIButton) {
