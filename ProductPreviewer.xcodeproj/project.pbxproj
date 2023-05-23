@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B3C82A429FB9A18003F1C55 /* AnimatedUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimatedUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B3C82A429FB9A18003F1C55 /* ProductPreviewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductPreviewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3C82A729FB9A18003F1C55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B3C82A929FB9A18003F1C55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3B3C82AB29FB9A18003F1C55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		3B3C829B29FB9A18003F1C55 = {
 			isa = PBXGroup;
 			children = (
-				3B3C82A629FB9A18003F1C55 /* AnimatedUI */,
+				3B3C82A629FB9A18003F1C55 /* ProductPreviewer */,
 				3B3C82A529FB9A18003F1C55 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +50,12 @@
 		3B3C82A529FB9A18003F1C55 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3B3C82A429FB9A18003F1C55 /* AnimatedUI.app */,
+				3B3C82A429FB9A18003F1C55 /* ProductPreviewer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3B3C82A629FB9A18003F1C55 /* AnimatedUI */ = {
+		3B3C82A629FB9A18003F1C55 /* ProductPreviewer */ = {
 			isa = PBXGroup;
 			children = (
 				3B3C82A729FB9A18003F1C55 /* AppDelegate.swift */,
@@ -67,15 +67,15 @@
 				3B3C82B229FB9A1C003F1C55 /* LaunchScreen.storyboard */,
 				3B3C82B529FB9A1C003F1C55 /* Info.plist */,
 			);
-			path = AnimatedUI;
+			path = ProductPreviewer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3B3C82A329FB9A18003F1C55 /* AnimatedUI */ = {
+		3B3C82A329FB9A18003F1C55 /* ProductPreviewer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B3C82B829FB9A1C003F1C55 /* Build configuration list for PBXNativeTarget "AnimatedUI" */;
+			buildConfigurationList = 3B3C82B829FB9A1C003F1C55 /* Build configuration list for PBXNativeTarget "ProductPreviewer" */;
 			buildPhases = (
 				3B3C82A029FB9A18003F1C55 /* Sources */,
 				3B3C82A129FB9A18003F1C55 /* Frameworks */,
@@ -85,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = AnimatedUI;
+			name = ProductPreviewer;
 			productName = AnimatedUI;
-			productReference = 3B3C82A429FB9A18003F1C55 /* AnimatedUI.app */;
+			productReference = 3B3C82A429FB9A18003F1C55 /* ProductPreviewer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3B3C829F29FB9A18003F1C55 /* Build configuration list for PBXProject "AnimatedUI" */;
+			buildConfigurationList = 3B3C829F29FB9A18003F1C55 /* Build configuration list for PBXProject "ProductPreviewer" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -118,7 +118,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3B3C82A329FB9A18003F1C55 /* AnimatedUI */,
+				3B3C82A329FB9A18003F1C55 /* ProductPreviewer */,
 			);
 		};
 /* End PBXProject section */
@@ -293,7 +293,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3EGXVN72T4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AnimatedUI/Info.plist;
+				INFOPLIST_FILE = ProductPreviewer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -321,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3EGXVN72T4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AnimatedUI/Info.plist;
+				INFOPLIST_FILE = ProductPreviewer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -343,7 +343,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3B3C829F29FB9A18003F1C55 /* Build configuration list for PBXProject "AnimatedUI" */ = {
+		3B3C829F29FB9A18003F1C55 /* Build configuration list for PBXProject "ProductPreviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B3C82B629FB9A1C003F1C55 /* Debug */,
@@ -352,7 +352,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B3C82B829FB9A1C003F1C55 /* Build configuration list for PBXNativeTarget "AnimatedUI" */ = {
+		3B3C82B829FB9A1C003F1C55 /* Build configuration list for PBXNativeTarget "ProductPreviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B3C82B929FB9A1C003F1C55 /* Debug */,

@@ -12,9 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var detailButton: UIButton!
     @IBOutlet weak var sizePickerView: UIPickerView!
     @IBOutlet weak var detailView: UIView!
-    @IBOutlet weak var addToCartButton: UIButton!
-    @IBOutlet weak var brandNameLabel: UILabel!
-    @IBOutlet weak var shoeNameLabel: UILabel!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var secondColorView: UIView!
     @IBOutlet weak var thirdColorView: UIView!
@@ -48,22 +45,40 @@ class ViewController: UIViewController {
     }
     
     @IBAction func detailButtonAction(_ sender: UIButton) {
+        Animation.shared.identifier = 1
         detailView.isHidden = false
-        Animation.shared.circleAnim(detailView, duration: 0.5)
+        chnBgView()
+        Animation.shared.circleAnim(detailView, duration: 0.5,
+                                    completion: {
+            DispatchQueue.main.async {
+                self.detailView.layer.sublayers!.remove(at: 0)
+                //self.detailView.backgroundColor = UIColor(red: 0.420, green: 0.578, blue: 0.945, alpha: 1.0)
+                //self.detailView.backgroundColor = UIColor(red: 0.710, green: 0.553, blue: 0.267, alpha: 1.0)
+                //self.detailView.backgroundColor = UIColor(red: 0.502, green: 0.514, blue: 1.000, alpha: 1.0)
+                self.detailView.backgroundColor = UIColor(red: 0.145, green: 0.588, blue: 0.745, alpha: 1.0)
+                    }
+        })
     }
     
     @IBAction func addToCartAction(_ sender: UIButton) {
-        detailView.isHidden = true
+        Animation.shared.identifier = 0
+        Animation.shared.circleAnim(detailView, duration: 0.5,
+                                    completion: {
+        DispatchQueue.main.async {
+           self.detailView.isHidden = true
+            }
+        })
     }
     
     @IBAction func closeButtonAction(_ sender: UIButton) {
-        detailView.isHidden = true
+       detailView.isHidden = true
     }
     
     func setupUI(){
         //button UI design
         closeButton.layer.cornerRadius = closeButton.layer.bounds.width / 2
         detailView.isHidden = true
+        //detailView.alpha = 0
         detailButton.layer.cornerRadius = detailButton.layer.bounds.width / 2
         
         //for making colorviews circular
@@ -128,6 +143,20 @@ class ViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
   
+    func chnBgView() {
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = detailView.bounds
+        gradientLayer.colors = [
+            UIColor(red: 0.592, green: 0.686, blue: 0.725, alpha: 1.0).cgColor,
+            UIColor(red: 0.824, green: 0.902, blue: 0.933, alpha: 1.0).cgColor,
+            UIColor(red: 0.490, green: 0.702, blue: 0.780, alpha: 1.0).cgColor,
+            UIColor(red: 0.976, green: 0.706, blue: 0.753, alpha: 1.0).cgColor
+        ]
+            detailView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        
+    }
     //MARK: Functions for changing the color of specific part of image.
     @objc func changeColorToRed(_ sender:UITapGestureRecognizer){
         Animation.shared.changeRed(imageView: layerImageView)
@@ -163,6 +192,7 @@ class ViewController: UIViewController {
         cartButton.backgroundColor = UIColor(red: 107, green: 132, blue: 241, alpha: 0)
         cartButton.tintColor = .white
     }
+    
 }
 
 //MARK: UIPickerView
@@ -212,24 +242,23 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate{
         switch sizeSelected{
             
         case "6":
-            Animation.shared.animateImageSize(x: 1.05, y: 1.05, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.05, y: 1.05, image: productImageView)
+            Animation.shared.animateImageSize(xFront: 1.05, yFront: 1.05, image: layerImageView, xBack: 1.03, yBack: 1.03)
+            Animation.shared.animateImageSize(xFront: 1.05, yFront: 1.05, image: productImageView, xBack: 1.03, yBack: 1.03)
            
         case "7":
-            Animation.shared.animateImageSize(x: 1.08, y: 1.08, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.08, y: 1.08, image: productImageView)
+            Animation.shared.animateImageSize(xFront: 1.08, yFront: 1.08, image: layerImageView, xBack: 1.06, yBack: 1.06)
+            Animation.shared.animateImageSize(xFront: 1.08, yFront: 1.08, image: productImageView, xBack: 1.06, yBack: 1.06)
         case "8":
-            Animation.shared.animateImageSize(x: 1.11, y: 1.11, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.11, y: 1.11, image: productImageView)
+            Animation.shared.animateImageSize(xFront: 1.11, yFront: 1.11, image: layerImageView, xBack: 1.08, yBack: 1.08)
+            Animation.shared.animateImageSize(xFront: 1.11, yFront: 1.11, image: productImageView, xBack: 1.08, yBack: 1.08)
         case "9":
-            Animation.shared.animateImageSize(x: 1.14, y: 1.14, image: layerImageView)
-            Animation.shared.animateImageSize(x: 1.14, y: 1.14, image: productImageView)
+            Animation.shared.animateImageSize(xFront: 1.14, yFront: 1.14, image: layerImageView, xBack: 1.12, yBack: 1.12)
+            Animation.shared.animateImageSize(xFront: 1.14, yFront: 1.14,  image: productImageView, xBack: 1.12, yBack: 1.12)
         default:
             print("invalid")
         }
     }
 }
-
 //MARK: gradient
 extension UIImage {
     func maskWithGradientColor(color: UIColor, value1: CGFloat, value2: CGFloat, value3: CGFloat, value4: CGFloat, value5: CGFloat, value6: CGFloat, alphaValueTop: CGFloat, alphaValueBottom: CGFloat) -> UIImage? {
