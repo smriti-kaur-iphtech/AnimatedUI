@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  AnimatedUI
+//  ProductPreviewer
 //
 //  Created by iPHTech 15 on 28/04/23.
 //
